@@ -54,10 +54,11 @@ def validar_y_limpiar_actas(df: pd.DataFrame):
 
     mascara_asistencia = pd.to_numeric(df['asistencia_pct'], errors='coerce').between(0, 100)
 
-    df_rechazados = df[~(mascara_legajo & mascara_asistencia)].copy()
+    filtro_rechazos = ~(mascara_legajo & mascara_asistencia)
+    df_rechazados = df[filtro_rechazos].copy()
     
     df_rechazados['motivo_rechazo'] = np.select(
-        [~mascara_legajo, ~mascara_asistencia],
+        [~mascara_legajo[filtro_rechazos], ~mascara_asistencia[filtro_rechazos]],
         ['Legajo malformado o inválido', 'Asistencia fuera de rango'],
         default='Múltiples errores'
     )
@@ -83,11 +84,25 @@ def transformar_y_resumir(df_valido: pd.DataFrame):
             condicion_academica=lambda tabla: np.select(
                 [
                     (tabla['ausentes_totales'] >= 3) & (tabla['asistencia_pct'] < 40),
-                    (tabla['promedio_final'] >= 7.0) & (tabla['asistencia_pct'] >= 75) & (tabla['adeuda_correlativas'] == False),
+                    (tabla['promedio_final'] >= 7.0) & (tabla['asistencia_pct'] >= 75), 
                     (tabla['promedio_final'] >= 4.0) & (tabla['asistencia_pct'] >= 60)
                 ],
                 ['Abandono', 'Promocionado', 'Regular'],
                 default='Libre'
+            ),
+            
+            
+
+            ranking_carrera=lambda tabla: tabla.groupby('carrera')['promedio_final'].rank(method='dense', ascending=False),
+            
+            beca_merito=lambda tabla: np.select(
+                [
+                    (tabla['promedio_final'] >= 9.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] == 1),
+                    
+                    (tabla['promedio_final'] >= 9.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] > 1)
+                ],
+                ['Beca Completa', 'Beca Parcial'],
+                default='Sin Beca' 
             )
         )
     )

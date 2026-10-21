@@ -1,0 +1,76 @@
+legajo,nombre_estudiante,carrera,promedio_final,condicion_academica,beca_merito
+10001-1,Ana Silva,Ciencia de Datos,8.6,Promocionado,Sin Beca
+10002-2,Luis Gomez,Ing. Informatica,6.1,Regular,Sin Beca
+10003-3,Maria Paz,Ciencia de Datos,9.6,Promocionado,Beca Parcial
+10004-4,Juan Cruz,Ing. Sistemas,4.5,Abandono,Sin Beca
+10006-6,Sofia Ruiz,Ing. Informatica,9.0,Promocionado,Beca Parcial
+10007-7,Pedro Rios,Ciencia de Datos,5.2,Regular,Sin Beca
+10008-8,Lucia Vega,Ing. Sistemas,8.7,Promocionado,Sin Beca
+10009-9,Diego Lara,Ciencia de Datos,6.62,Regular,Sin Beca
+10010-0,Elena Mora,Ing. Informatica,9.6,Promocionado,Beca Completa
+10011-1,Matias Rey,Ciencia de Datos,,Abandono,Sin Beca
+10012-2,Carla Diaz,Ing. Sistemas,9.0,Promocionado,Beca Parcial
+10013-3,Jorge Sosa,Ciencia de Datos,8.5,Promocionado,Sin Beca
+10014-4,Paula Arce,Ing. Informatica,8.0,Promocionado,Sin Beca
+10015-5,Tomas Vera,Ciencia de Datos,6.5,Libre,Sin Beca
+10016-6,Clara Gil,Ing. Sistemas,9.5,Promocionado,Beca Parcial
+10018-8,Nadia Luna,Ing. Informatica,8.7,Promocionado,Sin Beca
+10019-9,Pablo Muro,Ciencia de Datos,4.7,Regular,Sin Beca
+10020-0,Rosa Alba,Ing. Sistemas,9.4,Promocionado,Beca Parcial
+10021-1,Mario Soto,Ciencia de Datos,8.12,Promocionado,Sin Beca
+10022-2,Julia Cruz,Ing. Informatica,6.8,Regular,Sin Beca
+10023-3,Alan Nieto,Ciencia de Datos,9.2,Promocionado,Beca Parcial
+10024-4,Ines Caro,Ing. Sistemas,6.0,Regular,Sin Beca
+10026-6,Hugo Sanz,Ing. Informatica,9.5,Promocionado,Beca Parcial
+10027-7,Sara Pena,Ciencia de Datos,8.0,Promocionado,Sin Beca
+10028-8,Raul Roca,Ing. Sistemas,5.6,Regular,Sin Beca
+10029-9,Luz Costa,Ciencia de Datos,10.0,Promocionado,Beca Completa
+10030-0,Omar Soler,Ing. Informatica,5.3,Regular,Sin Beca
+10031-1,Celia Ruiz,Ciencia de Datos,8.75,Abandono,Sin Beca
+10032-2,Luis Roa,Ing. Sistemas,7.0,Promocionado,Sin Beca
+10033-3,Rita Mora,Ciencia de Datos,9.3,Promocionado,Beca Parcial
+10034-4,Jose Vila,Ing. Informatica,4.0,Libre,Sin Beca
+10036-6,Marc Gali,Ing. Sistemas,9.3,Promocionado,Beca Parcial
+10037-7,Nina Puig,Ciencia de Datos,7.6,Promocionado,Sin Beca
+10038-8,Alex Mas,Ing. Informatica,6.5,Regular,Sin Beca
+10039-9,Laia Font,Ciencia de Datos,9.8,Promocionado,Beca Parcial
+10040-0,Ivan Grau,Ing. Sistemas,5.0,Regular,Sin Beca
+10041-1,Emma Rius,Ciencia de Datos,8.5,Promocionado,Sin Beca
+10042-2,Toni Valls,Ing. Informatica,9.25,Promocionado,Beca Parcial
+10043-3,Lola Diez,Ciencia de Datos,7.0,Promocionado,Sin Beca
+10044-4,Pol Sala,Ing. Sistemas,8.2,Promocionado,Sin Beca
+10045-5,Mia Roca,Ciencia de Datos,9.67,Libre,Sin Beca
+10046-6,Nil Pou,Ing. Informatica,4.9,Libre,Sin Beca
+10047-7,Zoe Riba,Ciencia de Datos,8.8,Promocionado,Sin Beca
+10048-8,Leo Coll,Ing. Sistemas,8.7,Promocionado,Sin Beca
+10049-9,Noa Meca,Ciencia de Datos,7.5,Promocionado,Sin Beca
+10050-0,Jan Oms,Ing. Informatica,,Abandono,Sin Beca
+10051-1,Bru Pla,Ciencia de Datos,6.0,Regular,Sin Beca
+10052-2,Rut Sola,Ing. Sistemas,10.0,Promocionado,Beca Completa
+10053-3,Valeria Franco,Ciencia de Datos,9.4,Promocionado,Beca Parcial
+10054-4,Esteban Quito,Ing. Informatica,4.1,Regular,Sin Beca
+10055-5,Camila Torres,Ciencia de Datos,9.2,Promocionado,Beca Parcial
+10056-6,Gonzalo Mendez,Ing. Sistemas,8.2,Promocionado,Sin Beca
+10057-7,Florencia Rios,Ciencia de Datos,,Abandono,Sin Beca
+10058-8,Adrian Gomez,Ing. Informatica,7.5,Promocionado,Sin Beca
+10059-9,Martina Silva,Ciencia de Datos,5.4,Regular,Sin Beca
+10060-0,Julian Pastor,Ing. Sistemas,9.9,Promocionado,Beca Parcial
+10061-1,Luciana Ferreyra,Ciencia de Datos,8.5,Promocionado,Sin Beca
+10062-2,Ignacio Prado,Ing. Informatica,6.0,Regular,Sin Beca
+10063-3,Sabrina Mansilla,Ciencia de Datos,9.17,Libre,Sin Beca
+10064-4,Federico Bustos,Ing. Sistemas,8.1,Promocionado,Sin Beca
+10065-5,Victoria Ramos,Ciencia de Datos,9.6,Promocionado,Beca Parcial
+10066-6,Ezequiel Peralta,Ing. Informatica,7.0,Promocionado,Sin Beca
+10067-7,Daniela Ojeda,Ciencia de Datos,9.6,Promocionado,Beca Parcial
+10068-8,Guillermo Paz,Ing. Sistemas,8.1,Promocionado,Sin Beca
+10070-0,Ramiro Godoy,Ing. Informatica,5.0,Regular,Sin Beca
+10071-1,Agustina Ibarra,Ciencia de Datos,9.1,Promocionado,Beca Parcial
+10072-2,Santiago Cabrera,Ing. Sistemas,6.5,Regular,Sin Beca
+10074-4,Joaquin Maidana,Ing. Informatica,9.3,Promocionado,Beca Parcial
+10076-6,Gimena Benitez,Ing. Sistemas,7.2,Promocionado,Sin Beca
+10077-7,Bautista Arias,Ciencia de Datos,9.8,Promocionado,Beca Parcial
+10078-8,Lourdes Miranda,Ing. Informatica,3.9,Libre,Sin Beca
+10079-9,Manuel Coronel,Ciencia de Datos,,Abandono,Sin Beca
+10080-0,Josefina Moyano,Ing. Sistemas,8.7,Promocionado,Sin Beca
+10081-1,Marcos Santillan,Ciencia de Datos,6.1,Regular,Sin Beca
+10082-2,Rocio Ferreyra,Ing. Informatica,9.2,Promocionado,Beca Parcial

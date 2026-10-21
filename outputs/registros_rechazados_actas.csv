@@ -1,0 +1,8 @@
+legajo,nombre_estudiante,carrera,nota_matematica,nota_programacion,nota_estadistica,nota_bases_datos,nota_fisica,asistencia_pct,adeuda_correlativas,motivo_rechazo
+1000A-5,Error Legajo,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,80,False,Legajo malformado o inválido
+10017-7,Lucas Pino,Ciencia de Datos,7.5,7.0,8.0,7.5,7.0,120,False,Asistencia fuera de rango
+10025,Fallo RegEx,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,90,False,Legajo malformado o inválido
+10035-5,Anais Pons,Ciencia de Datos,8.0,8.0,8.5,8.0,8.5,-10,False,Asistencia fuera de rango
+10069-9,Melina Carrizo,Ciencia de Datos,8.0,8.5,8.0,8.5,8.0,110,False,Asistencia fuera de rango
+10073-3,Ximena Cardozo,Ciencia de Datos,8.0,8.0,8.0,8.5,8.0,-5,False,Asistencia fuera de rango
+10075-X,Error Legajo Dos,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,85,False,Legajo malformado o inválido
