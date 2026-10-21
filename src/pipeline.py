@@ -48,7 +48,26 @@ def normalizar_nota(valor):
         return np.nan
     
     
+def validar_y_limpiar_actas(df: pd.DataFrame):
+
+    mascara_legajo = df['legajo'].apply(legajo_valido)
+
+    mascara_asistencia = pd.to_numeric(df['asistencia_pct'], errors='coerce').between(0, 100)
+
+    df_rechazados = df[~(mascara_legajo & mascara_asistencia)].copy()
     
+    df_rechazados['motivo_rechazo'] = np.select(
+        [~mascara_legajo, ~mascara_asistencia],
+        ['Legajo malformado o inválido', 'Asistencia fuera de rango'],
+        default='Múltiples errores'
+    )
+
+    df_valido = df[mascara_legajo & mascara_asistencia].copy()
+    
+    return df_valido, df_rechazados
+
+
+ 
 def transformar_y_resumir(df_valido: pd.DataFrame):
 
     materias = ['nota_matematica', 'nota_programacion', 'nota_estadistica', 'nota_bases_datos', 'nota_fisica']
