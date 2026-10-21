@@ -1,0 +1,83 @@
+legajo,nombre_estudiante,carrera,nota_matematica,nota_programacion,nota_estadistica,nota_bases_datos,nota_fisica,asistencia_pct,adeuda_correlativas
+10001-1,Ana Silva,Ciencia de Datos,8.0,A,7.0,10.0,8.0,85,False
+10002-2,Luis Gomez,Ing. Informatica,6.0,7.0,5.0,6.5,6.0,90,True
+10003-3,Maria Paz,Ciencia de Datos,10.0,10.0,9.5,9.0,9.5,100,False
+10004-4,Juan Cruz,Ing. Sistemas,4.0,5.0,,,,15,False
+1000A-5,Error Legajo,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,80,False
+10006-6,Sofia Ruiz,Ing. Informatica,9.0,B+,8.5,9.5,9.0,88,False
+10007-7,Pedro Rios,Ciencia de Datos,-2.0,7.0,6.0,8.0,7.0,82,False
+10008-8,Lucia Vega,Ing. Sistemas,8.5,8.5,9.0,9.0,8.5,95,False
+10009-9,Diego Lara,Ciencia de Datos,7.0,6.0,,7.0,6.5,70,True
+10010-0,Elena Mora,Ing. Informatica,10.0,9.5,10.0,9.0,9.5,100,False
+10011-1,Matias Rey,Ciencia de Datos,,,,,,0,False
+10012-2,Carla Diaz,Ing. Sistemas,9.0,8.5,9.0,9.5,9.0,92,False
+10013-3,Jorge Sosa,Ciencia de Datos,12.0,8.0,7.5,8.0,7.0,85,False
+10014-4,Paula Arce,Ing. Informatica,8.0,7.5,8.0,8.5,8.0,80,False
+10015-5,Tomas Vera,Ciencia de Datos,6.5,7.0,6.0,,,40,False
+10016-6,Clara Gil,Ing. Sistemas,9.5,95/100,9.5,10.0,9.0,98,False
+10017-7,Lucas Pino,Ciencia de Datos,7.5,7.0,8.0,7.5,7.0,120,False
+10018-8,Nadia Luna,Ing. Informatica,8.5,9.0,8.5,9.0,8.5,86,True
+10019-9,Pablo Muro,Ciencia de Datos,4.5,5.0,4.0,5.5,4.5,65,False
+10020-0,Rosa Alba,Ing. Sistemas,10.0,9.0,9.5,9.0,9.5,94,False
+10021-1,Mario Soto,Ciencia de Datos,8.0,,8.0,8.5,8.0,88,False
+10022-2,Julia Cruz,Ing. Informatica,7.0,6.5,7.0,6.0,7.5,82,False
+10023-3,Alan Nieto,Ciencia de Datos,9.0,9.5,9.0,9.5,9.0,91,False
+10024-4,Ines Caro,Ing. Sistemas,6.0,5.5,6.0,6.5,6.0,74,True
+10025,Fallo RegEx,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,90,False
+10026-6,Hugo Sanz,Ing. Informatica,9.5,9.0,9.5,10.0,9.5,97,False
+10027-7,Sara Pena,Ciencia de Datos,8.0,8.5,8.0,7.5,8.0,84,False
+10028-8,Raul Roca,Ing. Sistemas,5.5,6.0,5.0,5.5,6.0,68,False
+10029-9,Luz Costa,Ciencia de Datos,10.0,10.0,10.0,10.0,10.0,100,False
+10030-0,Omar Soler,Ing. Informatica,-5.0,8.0,7.0,8.5,8.0,85,False
+10031-1,Celia Ruiz,Ciencia de Datos,8.5,9.0,,,,30,True
+10032-2,Luis Roa,Ing. Sistemas,7.0,7.5,7.0,6.5,7.0,79,False
+10033-3,Rita Mora,Ciencia de Datos,9.0,A,9.0,9.5,9.0,95,False
+10034-4,Jose Vila,Ing. Informatica,4.0,4.5,4.0,3.5,4.0,50,False
+10035-5,Anais Pons,Ciencia de Datos,8.0,8.0,8.5,8.0,8.5,-10,False
+10036-6,Marc Gali,Ing. Sistemas,9.5,9.0,9.5,9.0,9.5,96,False
+10037-7,Nina Puig,Ciencia de Datos,7.5,8.0,7.0,7.5,8.0,81,False
+10038-8,Alex Mas,Ing. Informatica,6.5,6.0,6.5,7.0,6.5,76,True
+10039-9,Laia Font,Ciencia de Datos,10.0,9.5,10.0,9.5,10.0,99,False
+10040-0,Ivan Grau,Ing. Sistemas,5.0,5.5,5.0,4.5,5.0,64,False
+10041-1,Emma Rius,Ciencia de Datos,8.5,8.0,8.5,9.0,8.5,87,False
+10042-2,Toni Valls,Ing. Informatica,9.0,9.5,,9.0,9.5,93,False
+10043-3,Lola Diez,Ciencia de Datos,7.0,7.5,7.0,6.5,7.0,77,False
+10044-4,Pol Sala,Ing. Sistemas,8.0,8.5,8.0,8.5,8.0,83,True
+10045-5,Mia Roca,Ciencia de Datos,9.5,10.0,9.5,,,50,False
+10046-6,Nil Pou,Ing. Informatica,4.5,C,4.5,5.0,4.5,55,False
+10047-7,Zoe Riba,Ciencia de Datos,11.0,8.0,8.5,8.0,8.5,86,False
+10048-8,Leo Coll,Ing. Sistemas,8.5,9.0,8.5,9.0,8.5,92,False
+10049-9,Noa Meca,Ciencia de Datos,7.5,7.0,7.5,8.0,7.5,80,False
+10050-0,Jan Oms,Ing. Informatica,,,,,,5,False
+10051-1,Bru Pla,Ciencia de Datos,6.0,6.5,6.0,5.5,6.0,72,False
+10052-2,Rut Sola,Ing. Sistemas,10.0,10.0,10.0,10.0,10.0,100,False
+10053-3,Valeria Franco,Ciencia de Datos,9.0,9.5,9.0,10.0,9.5,95,False
+10054-4,Esteban Quito,Ing. Informatica,4.0,4.0,3.5,5.0,4.0,60,False
+10055-5,Camila Torres,Ciencia de Datos,A,9.0,8.5,9.5,9.0,89,False
+10056-6,Gonzalo Mendez,Ing. Sistemas,8.0,8.5,8.0,8.5,8.0,83,True
+10057-7,Florencia Rios,Ciencia de Datos,,,,,,10,False
+10058-8,Adrian Gomez,Ing. Informatica,7.5,8.0,7.5,7.0,7.5,78,False
+10059-9,Martina Silva,Ciencia de Datos,-3.0,8.0,7.0,8.0,7.0,80,False
+10060-0,Julian Pastor,Ing. Sistemas,10.0,10.0,9.5,10.0,10.0,99,False
+10061-1,Luciana Ferreyra,Ciencia de Datos,8.5,B+,8.0,8.5,8.5,88,False
+10062-2,Ignacio Prado,Ing. Informatica,6.0,5.5,6.0,6.5,6.0,71,False
+10063-3,Sabrina Mansilla,Ciencia de Datos,9.0,9.0,9.5,,,45,False
+10064-4,Federico Bustos,Ing. Sistemas,8.0,8.0,8.5,8.0,8.0,85,True
+10065-5,Victoria Ramos,Ciencia de Datos,13.0,9.0,8.5,9.0,8.5,87,False
+10066-6,Ezequiel Peralta,Ing. Informatica,7.0,7.0,6.5,7.5,7.0,76,False
+10067-7,Daniela Ojeda,Ciencia de Datos,9.5,9.5,10.0,9.5,9.5,96,False
+10068-8,Guillermo Paz,Ing. Sistemas,80/100,8.0,8.5,8.0,8.0,84,False
+10069-9,Melina Carrizo,Ciencia de Datos,8.0,8.5,8.0,8.5,8.0,110,False
+10070-0,Ramiro Godoy,Ing. Informatica,5.0,4.5,5.0,5.5,5.0,62,False
+10071-1,Agustina Ibarra,Ciencia de Datos,9.0,9.0,9.0,9.5,9.0,91,False
+10072-2,Santiago Cabrera,Ing. Sistemas,6.5,6.0,6.5,7.0,6.5,73,False
+10073-3,Ximena Cardozo,Ciencia de Datos,8.0,8.0,8.0,8.5,8.0,-5,False
+10074-4,Joaquin Maidana,Ing. Informatica,9.5,9.0,9.5,9.0,9.5,94,False
+10075-X,Error Legajo Dos,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,85,False
+10076-6,Gimena Benitez,Ing. Sistemas,7.0,7.5,7.0,7.5,7.0,79,True
+10077-7,Bautista Arias,Ciencia de Datos,10.0,9.5,10.0,10.0,9.5,100,False
+10078-8,Lourdes Miranda,Ing. Informatica,4.0,3.5,4.0,4.0,4.0,52,False
+10079-9,Manuel Coronel,Ciencia de Datos,,,,,,0,False
+10080-0,Josefina Moyano,Ing. Sistemas,8.5,9.0,8.5,9.0,8.5,89,False
+10081-1,Marcos Santillan,Ciencia de Datos,6.0,C,6.0,6.5,6.0,68,False
+10082-2,Rocio Ferreyra,Ing. Informatica,9.0,9.5,9.0,9.5,9.0,93,False
