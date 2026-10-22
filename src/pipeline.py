@@ -71,38 +71,36 @@ def validar_y_limpiar_actas(df: pd.DataFrame):
  
 def transformar_y_resumir(df_valido: pd.DataFrame):
 
+    df_trabajo = df_valido.copy()
+    
     materias = ['nota_matematica', 'nota_programacion', 'nota_estadistica', 'nota_bases_datos', 'nota_fisica']
     
     for m in materias:
-        df_valido[m] = df_valido[m].apply(normalizar_nota)
+        df_trabajo[m] = df_trabajo[m].apply(normalizar_nota)
 
     df_resultado = (
-        df_valido
+        df_trabajo
         .assign(
             ausentes_totales=lambda tabla: tabla[materias].isna().sum(axis=1),
             promedio_final=lambda tabla: tabla[materias].mean(axis=1).round(2),
             condicion_academica=lambda tabla: np.select(
                 [
                     (tabla['ausentes_totales'] >= 3) & (tabla['asistencia_pct'] < 40),
-                    (tabla['promedio_final'] >= 7.0) & (tabla['asistencia_pct'] >= 75), 
+                    (tabla['promedio_final'] >= 7.0) & (tabla['asistencia_pct'] >= 75) & (tabla['adeuda_correlativas'] == False),
                     (tabla['promedio_final'] >= 4.0) & (tabla['asistencia_pct'] >= 60)
                 ],
                 ['Abandono', 'Promocionado', 'Regular'],
                 default='Libre'
             ),
-            
-            
 
             ranking_carrera=lambda tabla: tabla.groupby('carrera')['promedio_final'].rank(method='dense', ascending=False),
-            
             beca_merito=lambda tabla: np.select(
                 [
-                    (tabla['promedio_final'] >= 9.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] == 1),
-                    
-                    (tabla['promedio_final'] >= 9.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] > 1)
+                    (tabla['promedio_final'] >= 8.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] == 1),
+                    (tabla['promedio_final'] >= 8.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] > 1)
                 ],
                 ['Beca Completa', 'Beca Parcial'],
-                default='Sin Beca' 
+                default='Sin Beca'
             )
         )
     )

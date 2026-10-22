@@ -1,7 +1,7 @@
 # **Procesador de Actas y Regularidades Académicas**
 
 
-* **Autor:** \ Theo Piedrabuena  
+* **Autor:** Theo Piedrabuena  
 * **Materia:** Programación Orientada a Datos  
 
 # **Problema**
@@ -69,18 +69,26 @@ El programa no modifica el dataset original, sino que genera dos reportes de sal
 
 # **Instrucciones de Ejecución**
 
-### **Requisitos**
+## Requisitos
+
 Asegúrate de contar con Python 3.9 o superior y las dependencias instaladas:
+
 ```bash
 pip install pandas numpy
+```
 
+## Ejecutar la Aplicación
 
-**Ejecutar la Aplicación**
+Para procesar las actas, ejecutar las transformaciones y generar los reportes en la carpeta `outputs/`, ejecuta:
 
- * Para procesar las actas, ejecutar las transformaciones y generar los reportes en la carpeta outputs/, ejecuta desde la raíz del proyecto:
-   python src/main.py
+```bash
+python -m src.main
+```
 
-**Ejecutar las Pruebas Unitarias**
+## Ejecutar las Pruebas Unitarias
 
- *Para verificar la pureza y estabilidad de las funciones de validación, ejecuta:
-   python -m unittest tests/test_pipeline.py
+Para verificar la pureza y estabilidad de las funciones de validación, ejecuta:
+
+```bash
+python -m unittest -v tests/test_pipeline.py
+```
