@@ -10,7 +10,7 @@ Al finalizar un cuatrimestre, las secretarías académicas universitarias recibe
 
    * Inconsistencias de formato y errores de tipeo en los legajos.
 
-   * Escalas de calificación mixtas, producto de alumnos de intercambio o equivalencias (ej. notas numéricas mezcladas con letras como "A" o porcentajes como "85/100").
+   * Escalas de calificación mixtas, producto de alumnos de intercambio o equivalencias (ej. notas numéricas mezcladas con letras como "A", "B" o "C", o porcentajes como "85/100").
 
    * Campos vacíos o nulos generados por estudiantes que abandonaron la materia a mitad de cursada.
 
@@ -26,7 +26,7 @@ Construir una aplicación en Python para poder realizar las siguientes tareas:
    
    * Aplicar expresiones regulares para asegurar que el legajo del alumno cumpla el formato institucional estricto, y separar los registros con calificaciones lógicamente imposibles (ejemplo: notas negativas).   
    
-   * Convertir las escalas mixtas (letras o porcentajes) a una escala numérica uniforme, e inferir lógicamente el estado de "Abandono" en base a la inasistencia y la cantidad de parciales ausentes.
+   * Convertir las escalas mixtas (letras o porcentajes) a una escala numérica uniforme, e inferir un "Posibe Abandono" del alumno en base a la inasistencia y la cantidad de parciales ausentes.
    
    * Aplicar reglas de negocio cruzando el promedio final, el porcentaje de asistencia y el estado de sus materias correlativas para determinar la condición académica final.
 
@@ -62,8 +62,8 @@ Construir una aplicación en Python para poder realizar las siguientes tareas:
 * Al tratarse de un dataset sintético estructurado para probar código, las distribuciones de las calificaciones y la tasa de abandono no representan el rendimiento académico real ni el comportamiento estadístico de una población estudiantil.
 
 # **Resultados producidos e interpretación**
-El programa no modifica el dataset original, sino que genera dos reportes de salida[cite: 17]:
-1. `reporte_condicion_alumnos.csv`: Un consolidado con el legajo, carrera, promedio aritmético y la condición/beca final. Permite conocer inmediatamente el estatus de la cursada y los beneficiarios de becas sin cálculos manuales.
+El programa no modifica el dataset original, sino que genera dos reportes de salida:
+1. `reporte_condicion_alumnos.csv`: Un consolidado con el legajo, carrera, promedio final y la condición/beca final. Permite conocer inmediatamente el estatus de la cursada y los beneficiarios de becas sin cálculos manuales.
 2. `registros_rechazados_actas.csv`: Un registro de auditoría con las filas omitidas y el motivo explícito (ej. "Legajo malformado o inválido"). Garantiza la trazabilidad exigida por la materia; no se borra ni se asume ningún dato sin documentar por qué se excluyó del cálculo.
 
 

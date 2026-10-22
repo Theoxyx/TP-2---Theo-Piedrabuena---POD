@@ -1,0 +1,2 @@
+Contar con Python 3.9 o superior.
+Contar con las siguientes librerias: pandas, numpy
