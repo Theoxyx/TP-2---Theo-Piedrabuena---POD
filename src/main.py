@@ -1,8 +1,8 @@
 import sys
 from pathlib import Path
 
-from fuentes import FuenteCSV, FuenteJSON
-from pipeline import validar_y_limpiar_actas, transformar_y_resumir
+from src.fuentes import FuenteCSV, FuenteJSON
+from src.pipeline import validar_y_limpiar_actas, transformar_y_resumir
 
 def ejecutar_pipeline():
 

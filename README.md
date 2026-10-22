@@ -1,7 +1,7 @@
 # **Procesador de Actas y Regularidades Académicas**
 
 
-* **Autor:** \[Theo Piedrabuena]   
+* **Autor:** \ Theo Piedrabuena  
 * **Materia:** Programación Orientada a Datos  
 
 # **Problema**
@@ -29,6 +29,8 @@ Construir una aplicación en Python para poder realizar las siguientes tareas:
    * Convertir las escalas mixtas (letras o porcentajes) a una escala numérica uniforme, e inferir lógicamente el estado de "Abandono" en base a la inasistencia y la cantidad de parciales ausentes.
    
    * Aplicar reglas de negocio cruzando el promedio final, el porcentaje de asistencia y el estado de sus materias correlativas para determinar la condición académica final.
+
+   * Utilizar el promedio final para designar que alumnos pueden obtener una beca en la universidad. 
 
    * Este programa podra ser utilizado por personal o secretaría académica, para automatizar la carga de actas, estandarizar las escalas de notas y calcular el estado final de los estudiantes (Promocionado, Regular, Libre, Retenido o Abandono) de forma objetiva, rápida y repetible; o tambien podra ser utilizado por docentes y coordinadores de cátedra, para auditar rápidamente sus propias planillas antes de entregarlas, revisando la bitácora de errores generada por la aplicación para detectar inconsistencias previas a la carga oficial.
 
@@ -58,3 +60,27 @@ Construir una aplicación en Python para poder realizar las siguientes tareas:
 # **Limitaciones:**
 
 * Al tratarse de un dataset sintético estructurado para probar código, las distribuciones de las calificaciones y la tasa de abandono no representan el rendimiento académico real ni el comportamiento estadístico de una población estudiantil.
+
+# **Resultados producidos e interpretación**
+El programa no modifica el dataset original, sino que genera dos reportes de salida[cite: 17]:
+1. `reporte_condicion_alumnos.csv`: Un consolidado con el legajo, carrera, promedio aritmético y la condición/beca final. Permite conocer inmediatamente el estatus de la cursada y los beneficiarios de becas sin cálculos manuales.
+2. `registros_rechazados_actas.csv`: Un registro de auditoría con las filas omitidas y el motivo explícito (ej. "Legajo malformado o inválido"). Garantiza la trazabilidad exigida por la materia; no se borra ni se asume ningún dato sin documentar por qué se excluyó del cálculo.
+
+
+# **Instrucciones de Ejecución**
+
+### **Requisitos**
+Asegúrate de contar con Python 3.9 o superior y las dependencias instaladas:
+```bash
+pip install pandas numpy
+
+
+**Ejecutar la Aplicación**
+
+ * Para procesar las actas, ejecutar las transformaciones y generar los reportes en la carpeta outputs/, ejecuta desde la raíz del proyecto:
+   python src/main.py
+
+**Ejecutar las Pruebas Unitarias**
+
+ *Para verificar la pureza y estabilidad de las funciones de validación, ejecuta:
+   python -m unittest tests/test_pipeline.py
