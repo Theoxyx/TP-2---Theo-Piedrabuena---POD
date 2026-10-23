@@ -86,7 +86,7 @@ def transformar_y_resumir(df_valido: pd.DataFrame):
             condicion_academica=lambda tabla: np.select(
                 [
                     (tabla['ausentes_totales'] >= 3) & (tabla['asistencia_pct'] < 40),
-                    (tabla['promedio_final'] >= 7.0) & (tabla['asistencia_pct'] >= 75) & (tabla['adeuda_correlativas'] == False),
+                    (tabla['promedio_final'] >= 8.0) & (tabla['asistencia_pct'] >= 70) & (tabla['adeuda_correlativas'] == False),
                     (tabla['promedio_final'] >= 4.0) & (tabla['asistencia_pct'] >= 60)
                 ],
                 ['Abandono', 'Promocionado', 'Regular'],
@@ -96,8 +96,8 @@ def transformar_y_resumir(df_valido: pd.DataFrame):
             ranking_carrera=lambda tabla: tabla.groupby('carrera')['promedio_final'].rank(method='dense', ascending=False),
             beca_merito=lambda tabla: np.select(
                 [
-                    (tabla['promedio_final'] >= 8.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] == 1),
-                    (tabla['promedio_final'] >= 8.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] > 1)
+                    (tabla['promedio_final'] > 9.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] == 1),
+                    (tabla['promedio_final'] > 9.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] > 1)
                 ],
                 ['Beca Completa', 'Beca Parcial'],
                 default='Sin Beca'

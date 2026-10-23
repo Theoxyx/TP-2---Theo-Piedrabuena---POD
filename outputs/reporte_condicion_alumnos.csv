@@ -14,7 +14,7 @@ legajo,nombre_estudiante,carrera,promedio_final,condicion_academica,beca_merito
 10014-4,Paula Arce,Ing. Informatica,8.0,Promocionado,Sin Beca
 10015-5,Tomas Vera,Ciencia de Datos,6.5,Libre,Sin Beca
 10016-6,Clara Gil,Ing. Sistemas,9.5,Promocionado,Beca Parcial
-10018-8,Nadia Luna,Ing. Informatica,8.7,Promocionado,Sin Beca
+10018-8,Nadia Luna,Ing. Informatica,8.7,Regular,Sin Beca
 10019-9,Pablo Muro,Ciencia de Datos,4.7,Regular,Sin Beca
 10020-0,Rosa Alba,Ing. Sistemas,9.4,Promocionado,Beca Parcial
 10021-1,Mario Soto,Ciencia de Datos,8.12,Promocionado,Sin Beca
@@ -38,7 +38,7 @@ legajo,nombre_estudiante,carrera,promedio_final,condicion_academica,beca_merito
 10041-1,Emma Rius,Ciencia de Datos,8.5,Promocionado,Sin Beca
 10042-2,Toni Valls,Ing. Informatica,9.25,Promocionado,Beca Parcial
 10043-3,Lola Diez,Ciencia de Datos,7.0,Promocionado,Sin Beca
-10044-4,Pol Sala,Ing. Sistemas,8.2,Promocionado,Sin Beca
+10044-4,Pol Sala,Ing. Sistemas,8.2,Regular,Sin Beca
 10045-5,Mia Roca,Ciencia de Datos,9.67,Libre,Sin Beca
 10046-6,Nil Pou,Ing. Informatica,4.9,Libre,Sin Beca
 10047-7,Zoe Riba,Ciencia de Datos,8.8,Promocionado,Sin Beca
@@ -50,7 +50,7 @@ legajo,nombre_estudiante,carrera,promedio_final,condicion_academica,beca_merito
 10053-3,Valeria Franco,Ciencia de Datos,9.4,Promocionado,Beca Parcial
 10054-4,Esteban Quito,Ing. Informatica,4.1,Regular,Sin Beca
 10055-5,Camila Torres,Ciencia de Datos,9.2,Promocionado,Beca Parcial
-10056-6,Gonzalo Mendez,Ing. Sistemas,8.2,Promocionado,Sin Beca
+10056-6,Gonzalo Mendez,Ing. Sistemas,8.2,Regular,Sin Beca
 10057-7,Florencia Rios,Ciencia de Datos,,Abandono,Sin Beca
 10058-8,Adrian Gomez,Ing. Informatica,7.5,Promocionado,Sin Beca
 10059-9,Martina Silva,Ciencia de Datos,5.4,Regular,Sin Beca
@@ -58,7 +58,7 @@ legajo,nombre_estudiante,carrera,promedio_final,condicion_academica,beca_merito
 10061-1,Luciana Ferreyra,Ciencia de Datos,8.5,Promocionado,Sin Beca
 10062-2,Ignacio Prado,Ing. Informatica,6.0,Regular,Sin Beca
 10063-3,Sabrina Mansilla,Ciencia de Datos,9.17,Libre,Sin Beca
-10064-4,Federico Bustos,Ing. Sistemas,8.1,Promocionado,Sin Beca
+10064-4,Federico Bustos,Ing. Sistemas,8.1,Regular,Sin Beca
 10065-5,Victoria Ramos,Ciencia de Datos,9.6,Promocionado,Beca Parcial
 10066-6,Ezequiel Peralta,Ing. Informatica,7.0,Promocionado,Sin Beca
 10067-7,Daniela Ojeda,Ciencia de Datos,9.6,Promocionado,Beca Parcial
@@ -67,7 +67,7 @@ legajo,nombre_estudiante,carrera,promedio_final,condicion_academica,beca_merito
 10071-1,Agustina Ibarra,Ciencia de Datos,9.1,Promocionado,Beca Parcial
 10072-2,Santiago Cabrera,Ing. Sistemas,6.5,Regular,Sin Beca
 10074-4,Joaquin Maidana,Ing. Informatica,9.3,Promocionado,Beca Parcial
-10076-6,Gimena Benitez,Ing. Sistemas,7.2,Promocionado,Sin Beca
+10076-6,Gimena Benitez,Ing. Sistemas,7.2,Regular,Sin Beca
 10077-7,Bautista Arias,Ciencia de Datos,9.8,Promocionado,Beca Parcial
 10078-8,Lourdes Miranda,Ing. Informatica,3.9,Libre,Sin Beca
 10079-9,Manuel Coronel,Ciencia de Datos,,Abandono,Sin Beca

@@ -23,7 +23,7 @@ class TestPipelineAcademico(unittest.TestCase):
 
         datos_prueba = pd.DataFrame({
             'legajo': ['12345-1', '00000-1', '54321-2'],
-            'asistencia_pct': [80, 90, 150] # El último tiene asistencia irreal
+            'asistencia_pct': [80, 90, 150] 
         })
         
         df_valido, df_rechazos = validar_y_limpiar_actas(datos_prueba)
@@ -58,7 +58,8 @@ class TestPipelineAcademico(unittest.TestCase):
 
         alumno_b = df_resultado[df_resultado['legajo'] == '22222-2'].iloc[0]
         self.assertEqual(alumno_b['promedio_final'], 8.0)
-        self.assertEqual(alumno_b['beca_merito'], 'Beca Parcial')
+        self.assertEqual(alumno_b['condicion_academica'], 'Promocionado') 
+        self.assertEqual(alumno_b['beca_merito'], 'Sin Beca')
 
     def test_no_modificar_original(self):
 
