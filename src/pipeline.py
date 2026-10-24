@@ -190,40 +190,59 @@ def validar_y_limpiar_actas(df, reglas=None):
     return df_valido, df_rechazados
 
 
-def transformar_y_resumir(df_valido: pd.DataFrame):
+def transformar_y_resumir(df_valido, reglas=None):
 
-    df_trabajo = df_valido.copy()
-    
-    materias = ['nota_matematica', 'nota_programacion', 'nota_estadistica', 'nota_bases_datos', 'nota_fisica']
-    
-    for m in materias:
-        df_trabajo[m] = df_trabajo[m].apply(normalizar_nota)
-
-    df_resultado = (
-        df_trabajo
-        .assign(
-            ausentes_totales=lambda tabla: tabla[materias].isna().sum(axis=1),
-            promedio_final=lambda tabla: tabla[materias].mean(axis=1).round(2),
-            condicion_academica=lambda tabla: np.select(
-                [
-                    (tabla['ausentes_totales'] >= 3) & (tabla['asistencia_pct'] < 40),
-                    (tabla['promedio_final'] >= 8.0) & (tabla['asistencia_pct'] >= 70) & (tabla['adeuda_correlativas'] == False),
-                    (tabla['promedio_final'] >= 4.0) & (tabla['asistencia_pct'] >= 60)
-                ],
-                ['Abandono', 'Promocionado', 'Regular'],
-                default='Libre'
-            ),
-
-            ranking_carrera=lambda tabla: tabla.groupby('carrera')['promedio_final'].rank(method='dense', ascending=False),
-            beca_merito=lambda tabla: np.select(
-                [
-                    (tabla['promedio_final'] > 9.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] == 1),
-                    (tabla['promedio_final'] > 9.0) & (tabla['asistencia_pct'] >= 80) & (tabla['ranking_carrera'] > 1)
-                ],
-                ['Beca Completa', 'Beca Parcial'],
-                default='Sin Beca'
-            )
-        )
+    reglas = reglas if reglas is not None else ReglasAcademicas()
+    _exigir_columnas(
+        df_valido,
+        ['legajo', 'carrera', *COLUMNAS_NOTAS, 'asistencia_pct', 'adeuda_correlativas'],
     )
-
-    return df_resultado
+    df = df_valido.reset_index(drop=True).copy()
+ 
+    try:
+        notas = df[COLUMNAS_NOTAS].astype(float)
+        df['asistencia_pct'] = df['asistencia_pct'].astype(float)
+    except (ValueError, TypeError) as error:
+        raise ErrorDatos(
+            'transformar_y_resumir espera notas y asistencia numéricas; '
+            f'ejecutá validar_y_limpiar_actas antes. Detalle: {error}'
+        ) from error
+    df[COLUMNAS_NOTAS] = notas
+    df['adeuda_correlativas'] = df['adeuda_correlativas'].astype(bool)
+ 
+    df['ausentes_totales'] = notas.isna().sum(axis=1)
+    df['promedio_final'] = notas.mean(axis=1).round(2)
+    df['condicion_academica'] = [
+        reglas.condicion(promedio, asistencia, int(ausentes), adeuda)
+        for promedio, asistencia, ausentes, adeuda in zip(
+            df['promedio_final'],
+            df['asistencia_pct'],
+            df['ausentes_totales'],
+            df['adeuda_correlativas'],
+        )
+    ]
+ 
+    elegible = pd.Series(
+        [
+            reglas.elegible_beca(promedio, asistencia, condicion)
+            for promedio, asistencia, condicion in zip(
+                df['promedio_final'], df['asistencia_pct'], df['condicion_academica']
+            )
+        ],
+        index=df.index,
+        dtype=bool,
+    )
+    df['ranking_carrera'] = pd.Series(pd.NA, index=df.index, dtype='Int64')
+    candidatos = df[elegible].sort_values(
+        ['carrera', 'promedio_final', 'asistencia_pct', 'legajo'],
+        ascending=[True, False, False, True],
+    )
+    if not candidatos.empty:
+        df.loc[candidatos.index, 'ranking_carrera'] = (
+            candidatos.groupby('carrera').cumcount() + 1
+        )
+    df['beca_merito'] = [
+        reglas.beca(None if pd.isna(puesto) else int(puesto))
+        for puesto in df['ranking_carrera']
+    ]
+    return df
