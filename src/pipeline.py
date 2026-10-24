@@ -42,24 +42,14 @@ class ErrorResultado(RuntimeError):
     
     
 def legajo_valido(valor):
-    """True si el legajo tiene el formato NNNNN-D y la base no es 00000."""
+
     if not isinstance(valor, str) or PATRON_LEGAJO.fullmatch(valor) is None:
         return False
     return int(valor[:5]) != 0
 
 
 def normalizar_nota(valor):
-    """Convierte una nota en escala mixta a número (escala 0-10).
- 
-    - Nulos y marcas de ausencia ('', 'Ausente') -> NaN (nota ausente).
-    - Números -> float. Texto numérico, admitiendo coma decimal ('8,5').
-    - Letras (A, B+, B, C, D) -> según ESCALA_LETRAS.
-    - Porcentajes 'NN/100' -> NN / 10.
- 
-    No valida el rango: eso lo hace validar_y_limpiar_actas. Si el valor no
-    se reconoce lanza ValueError, para no confundir "formato desconocido"
-    con "estudiante ausente".
-    """
+
     if valor is None or valor is pd.NA:
         return np.nan
     if isinstance(valor, (bool, np.bool_)):
@@ -119,6 +109,85 @@ def validar_esquema(df):
     """Comprueba que la tabla tenga todas las columnas que usa el análisis."""
     _exigir_columnas(df, COLUMNAS_REQUERIDAS)
 
+
+def _marcar(motivos, mascara_error, texto):
+    for posicion in np.flatnonzero(np.asarray(mascara_error, dtype=bool)):
+        motivos[posicion].append(texto)
+ 
+ 
+def _normalizar_columna_notas(serie, reglas):
+
+    valores, errores = [], {}
+    for posicion, original in enumerate(serie):
+        try:
+            nota = normalizar_nota(original)
+        except ValueError as error:
+            valores.append(np.nan)
+            errores[posicion] = str(error)
+            continue
+        if not np.isnan(nota) and not reglas.nota_en_rango(nota):
+            errores[posicion] = (
+                f'nota fuera de rango '
+                f'({reglas.nota_min:g}-{reglas.nota_max:g}): {original}'
+            )
+        valores.append(nota)
+    return pd.Series(valores, index=serie.index, dtype=float), errores
+ 
+ 
+def validar_y_limpiar_actas(df, reglas=None):
+    
+    reglas = reglas if reglas is not None else ReglasAcademicas()
+    validar_esquema(df)
+ 
+    original = df.reset_index(drop=True)
+    trabajo = original.copy()
+    motivos = [[] for _ in range(len(trabajo))]
+ 
+
+    mascara_legajo = trabajo['legajo'].apply(legajo_valido).astype(bool)
+    _marcar(motivos, ~mascara_legajo, 'Legajo malformado o inválido')
+    repetido = (
+        trabajo['legajo'].where(mascara_legajo).duplicated(keep='first')
+        & mascara_legajo
+    )
+    _marcar(motivos, repetido, 'Legajo duplicado (se conserva la primera aparición)')
+ 
+    # Asistencia: numérica y dentro de rango
+    asistencia = pd.to_numeric(trabajo['asistencia_pct'], errors='coerce')
+    _marcar(motivos, asistencia.isna(), 'Asistencia ausente o no numérica')
+    fuera = asistencia.notna() & ~asistencia.between(
+        reglas.asistencia_min, reglas.asistencia_max
+    )
+    _marcar(
+        motivos,
+        fuera,
+        f'Asistencia fuera de rango ({reglas.asistencia_min:g}-{reglas.asistencia_max:g})',
+    )
+    trabajo['asistencia_pct'] = asistencia
+ 
+
+    for columna in COLUMNAS_NOTAS:
+        notas, errores = _normalizar_columna_notas(trabajo[columna], reglas)
+        trabajo[columna] = notas
+        for posicion, texto in errores.items():
+            motivos[posicion].append(f'{columna}: {texto}')
+ 
+    # Correlativas: valor booleano interpretable
+    adeuda = trabajo['adeuda_correlativas'].apply(normalizar_booleano)
+    _marcar(motivos, adeuda.isna(), 'adeuda_correlativas no es un valor booleano')
+    trabajo['adeuda_correlativas'] = adeuda
+ 
+    rechazada = np.array([bool(m) for m in motivos], dtype=bool)
+ 
+    df_rechazados = original.loc[rechazada].copy()
+    df_rechazados.insert(0, 'fila_origen', df_rechazados.index + 1)
+    df_rechazados['motivo_rechazo'] = [
+        '; '.join(motivos[posicion]) for posicion in df_rechazados.index
+    ]
+ 
+    df_valido = trabajo.loc[~rechazada].copy()
+    df_valido['adeuda_correlativas'] = df_valido['adeuda_correlativas'].astype(bool)
+    return df_valido, df_rechazados
 
 
 def transformar_y_resumir(df_valido: pd.DataFrame):
