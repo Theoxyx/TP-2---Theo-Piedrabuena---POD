@@ -12,7 +12,7 @@ from src.fuentes import (
     FuenteJSON,
     fuente_desde_ruta,
 )
-from src.pipeline import transformar_y_resumir, validar_y_limpiar_actas
+from src.pipeline import validar_y_limpiar_actas, transformar_y_resumir
 
 REGISTROS = [
     {'legajo': '10001-1', 'nombre_estudiante': 'Ana Silva', 'carrera': 'Ciencia de Datos',
@@ -45,6 +45,8 @@ class BaseConCarpeta(unittest.TestCase):
 class TestLecturaYErrores(BaseConCarpeta):
 
     def test_ambas_fuentes_cumplen_el_contrato_comun(self):
+        """Verifica que tanto FuenteCSV como FuenteJSON hereden de FuenteDatos 
+        y lean los datos conservando la estructura."""
         pd.DataFrame(REGISTROS).to_csv(self.dir / 'a.csv', index=False)
         (self.dir / 'a.json').write_text(json.dumps(REGISTROS), encoding='utf-8')
         for fuente in (FuenteCSV(self.dir / 'a.csv'), FuenteJSON(self.dir / 'a.json')):
@@ -56,10 +58,12 @@ class TestLecturaYErrores(BaseConCarpeta):
                 self.assertEqual(list(tabla.columns), list(REGISTROS[0]))
 
     def test_la_clase_base_no_se_puede_instanciar(self):
+        """Asegura que FuenteDatos actúe como una clase abstracta."""
         with self.assertRaises(TypeError):
             FuenteDatos('x.csv')
 
     def test_archivo_inexistente(self):
+        """Verifica que el sistema notifique correctamente si el archivo no existe."""
         for clase in (FuenteCSV, FuenteJSON):
             with self.subTest(clase=clase.__name__):
                 with self.assertRaises(FileNotFoundError) as contexto:
@@ -67,11 +71,13 @@ class TestLecturaYErrores(BaseConCarpeta):
                 self.assertIn('no_existe.dat', str(contexto.exception))
 
     def test_json_mal_formado(self):
+        """Prueba que el lector de JSON falle graciosamente ante sintaxis corrupta."""
         ruta = self.escribir('roto.json', '[{"legajo": "10001-1",')
         with self.assertRaises(ErrorDatos):
             FuenteJSON(ruta).cargar()
 
     def test_json_con_estructura_incorrecta(self):
+        """Asegura que el JSON contenga obligatoriamente una lista de objetos."""
         for nombre, contenido in {
             'objeto.json': '{"legajo": "10001-1"}',
             'lista_de_numeros.json': '[1, 2, 3]',
@@ -82,15 +88,18 @@ class TestLecturaYErrores(BaseConCarpeta):
                     FuenteJSON(self.escribir(nombre, contenido)).cargar()
 
     def test_csv_vacio(self):
+        """Comprueba que no se procesen CSV vacíos."""
         with self.assertRaises(ErrorDatos):
             FuenteCSV(self.escribir('vacio.csv', '')).cargar()
 
     def test_csv_con_bom_de_excel(self):
+        """Valida que se elimine correctamente el BOM (Byte Order Mark) que suele dejar Excel al exportar."""
         ruta = self.dir / 'bom.csv'
         ruta.write_bytes('\ufefflegajo,carrera\n10001-1,Data\n'.encode('utf-8'))
         self.assertEqual(list(FuenteCSV(ruta).cargar().columns), ['legajo', 'carrera'])
 
     def test_fuente_segun_extension(self):
+        """Verifica la fábrica polimórfica fuente_desde_ruta."""
         self.assertIsInstance(fuente_desde_ruta('datos.csv'), FuenteCSV)
         self.assertIsInstance(fuente_desde_ruta('datos.JSON'), FuenteJSON)
         for ruta in ('datos.xlsx', 'datos'):
@@ -102,10 +111,13 @@ class TestLecturaYErrores(BaseConCarpeta):
 class TestEquivalenciaCSVJSON(BaseConCarpeta):
 
     def _procesar(self, fuente):
+
         valido, rechazados = validar_y_limpiar_actas(fuente.cargar())
         return transformar_y_resumir(valido), rechazados
 
     def test_csv_y_json_equivalentes_dan_el_mismo_resultado(self):
+        """La prueba de oro (Golden Test): Garantiza que importar desde JSON o CSV 
+        deja el dataframe procesado en el mismo estado final bit a bit."""
         pd.DataFrame(REGISTROS).to_csv(self.dir / 'a.csv', index=False)
         (self.dir / 'a.json').write_text(json.dumps(REGISTROS), encoding='utf-8')
 
@@ -115,6 +127,7 @@ class TestEquivalenciaCSVJSON(BaseConCarpeta):
         pd.testing.assert_frame_equal(final_csv, final_json, check_dtype=False)
         self.assertEqual(rech_csv['legajo'].tolist(), rech_json['legajo'].tolist())
         self.assertEqual(rech_csv['motivo_rechazo'].tolist(), rech_json['motivo_rechazo'].tolist())
+        
         self.assertEqual(len(final_csv), 2)
         self.assertEqual(len(rech_csv), 1)
 
