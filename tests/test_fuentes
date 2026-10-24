@@ -1,0 +1,123 @@
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+import pandas as pd
+
+from src.fuentes import (
+    ErrorDatos,
+    FuenteCSV,
+    FuenteDatos,
+    FuenteJSON,
+    fuente_desde_ruta,
+)
+from src.pipeline import transformar_y_resumir, validar_y_limpiar_actas
+
+REGISTROS = [
+    {'legajo': '10001-1', 'nombre_estudiante': 'Ana Silva', 'carrera': 'Ciencia de Datos',
+     'nota_matematica': 8.0, 'nota_programacion': 'A', 'nota_estadistica': 7.0,
+     'nota_bases_datos': 10.0, 'nota_fisica': 8.0,
+     'asistencia_pct': 85, 'adeuda_correlativas': False},
+    {'legajo': '10004-4', 'nombre_estudiante': 'Juan Cruz', 'carrera': 'Ing. Sistemas',
+     'nota_matematica': 4.0, 'nota_programacion': '85/100', 'nota_estadistica': None,
+     'nota_bases_datos': None, 'nota_fisica': None,
+     'asistencia_pct': 15, 'adeuda_correlativas': True},
+    {'legajo': '1000A-5', 'nombre_estudiante': 'Error Legajo', 'carrera': 'Ciencia de Datos',
+     'nota_matematica': 8.0, 'nota_programacion': 8.0, 'nota_estadistica': 8.0,
+     'nota_bases_datos': 8.0, 'nota_fisica': 8.0,
+     'asistencia_pct': 80, 'adeuda_correlativas': False},
+]
+
+
+class BaseConCarpeta(unittest.TestCase):
+    def setUp(self):
+        self._carpeta = tempfile.TemporaryDirectory()
+        self.addCleanup(self._carpeta.cleanup)
+        self.dir = Path(self._carpeta.name)
+
+    def escribir(self, nombre, texto):
+        ruta = self.dir / nombre
+        ruta.write_text(texto, encoding='utf-8')
+        return ruta
+
+
+class TestLecturaYErrores(BaseConCarpeta):
+
+    def test_ambas_fuentes_cumplen_el_contrato_comun(self):
+        pd.DataFrame(REGISTROS).to_csv(self.dir / 'a.csv', index=False)
+        (self.dir / 'a.json').write_text(json.dumps(REGISTROS), encoding='utf-8')
+        for fuente in (FuenteCSV(self.dir / 'a.csv'), FuenteJSON(self.dir / 'a.json')):
+            with self.subTest(fuente=type(fuente).__name__):
+                self.assertIsInstance(fuente, FuenteDatos)
+                tabla = fuente.cargar()
+                self.assertIsInstance(tabla, pd.DataFrame)
+                self.assertEqual(len(tabla), 3)
+                self.assertEqual(list(tabla.columns), list(REGISTROS[0]))
+
+    def test_la_clase_base_no_se_puede_instanciar(self):
+        with self.assertRaises(TypeError):
+            FuenteDatos('x.csv')
+
+    def test_archivo_inexistente(self):
+        for clase in (FuenteCSV, FuenteJSON):
+            with self.subTest(clase=clase.__name__):
+                with self.assertRaises(FileNotFoundError) as contexto:
+                    clase(self.dir / 'no_existe.dat').cargar()
+                self.assertIn('no_existe.dat', str(contexto.exception))
+
+    def test_json_mal_formado(self):
+        ruta = self.escribir('roto.json', '[{"legajo": "10001-1",')
+        with self.assertRaises(ErrorDatos):
+            FuenteJSON(ruta).cargar()
+
+    def test_json_con_estructura_incorrecta(self):
+        for nombre, contenido in {
+            'objeto.json': '{"legajo": "10001-1"}',
+            'lista_de_numeros.json': '[1, 2, 3]',
+            'mezcla.json': '[{"legajo": "1"}, 5]',
+        }.items():
+            with self.subTest(archivo=nombre):
+                with self.assertRaises(ErrorDatos):
+                    FuenteJSON(self.escribir(nombre, contenido)).cargar()
+
+    def test_csv_vacio(self):
+        with self.assertRaises(ErrorDatos):
+            FuenteCSV(self.escribir('vacio.csv', '')).cargar()
+
+    def test_csv_con_bom_de_excel(self):
+        ruta = self.dir / 'bom.csv'
+        ruta.write_bytes('\ufefflegajo,carrera\n10001-1,Data\n'.encode('utf-8'))
+        self.assertEqual(list(FuenteCSV(ruta).cargar().columns), ['legajo', 'carrera'])
+
+    def test_fuente_segun_extension(self):
+        self.assertIsInstance(fuente_desde_ruta('datos.csv'), FuenteCSV)
+        self.assertIsInstance(fuente_desde_ruta('datos.JSON'), FuenteJSON)
+        for ruta in ('datos.xlsx', 'datos'):
+            with self.subTest(ruta=ruta):
+                with self.assertRaises(ErrorDatos):
+                    fuente_desde_ruta(ruta)
+
+
+class TestEquivalenciaCSVJSON(BaseConCarpeta):
+
+    def _procesar(self, fuente):
+        valido, rechazados = validar_y_limpiar_actas(fuente.cargar())
+        return transformar_y_resumir(valido), rechazados
+
+    def test_csv_y_json_equivalentes_dan_el_mismo_resultado(self):
+        pd.DataFrame(REGISTROS).to_csv(self.dir / 'a.csv', index=False)
+        (self.dir / 'a.json').write_text(json.dumps(REGISTROS), encoding='utf-8')
+
+        final_csv, rech_csv = self._procesar(FuenteCSV(self.dir / 'a.csv'))
+        final_json, rech_json = self._procesar(FuenteJSON(self.dir / 'a.json'))
+
+        pd.testing.assert_frame_equal(final_csv, final_json, check_dtype=False)
+        self.assertEqual(rech_csv['legajo'].tolist(), rech_json['legajo'].tolist())
+        self.assertEqual(rech_csv['motivo_rechazo'].tolist(), rech_json['motivo_rechazo'].tolist())
+        self.assertEqual(len(final_csv), 2)
+        self.assertEqual(len(rech_csv), 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
