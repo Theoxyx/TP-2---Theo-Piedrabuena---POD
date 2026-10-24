@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import math
 import numbers
+from pathlib import Path
 
 from src.dominio import BECAS, CONDICIONES, ReglasAcademicas
 from src.fuentes import ErrorDatos
@@ -246,3 +247,60 @@ def transformar_y_resumir(df_valido, reglas=None):
         for puesto in df['ranking_carrera']
     ]
     return df
+
+
+
+
+def verificar_resultado(df_final, reglas=None):
+
+    reglas = reglas if reglas is not None else ReglasAcademicas()
+    problemas = []
+ 
+    promedios = df_final['promedio_final'].dropna()
+    if not promedios.between(reglas.nota_min, reglas.nota_max).all():
+        problemas.append('hay promedios fuera de la escala de notas')
+    if not df_final['condicion_academica'].isin(CONDICIONES).all():
+        problemas.append('hay condiciones académicas desconocidas')
+    if not df_final['beca_merito'].isin(BECAS).all():
+        problemas.append('hay tipos de beca desconocidos')
+    if df_final['legajo'].duplicated().any():
+        problemas.append('hay legajos repetidos en el resultado')
+ 
+    completas = df_final[df_final['beca_merito'] == 'Beca Completa']
+    if (completas.groupby('carrera').size() > 1).any():
+        problemas.append('hay más de una Beca Completa en una misma carrera')
+    becados = df_final['beca_merito'] != 'Sin Beca'
+    if (df_final.loc[becados, 'condicion_academica'] != 'Promocionado').any():
+        problemas.append('hay becados que no están Promocionados')
+ 
+    if problemas:
+        raise ErrorResultado(
+            'El resultado no supera las verificaciones: ' + '; '.join(problemas) + '.'
+        )
+ 
+ 
+def resumir_resultados(df_final):
+
+    columnas = ['carrera', 'alumnos', 'promedio_medio', *CONDICIONES, *BECAS]
+    if df_final.empty:
+        return pd.DataFrame(columns=columnas)
+    base = df_final.groupby('carrera').agg(
+        alumnos=('legajo', 'count'), promedio_medio=('promedio_final', 'mean')
+    )
+    base['promedio_medio'] = base['promedio_medio'].round(2)
+    condiciones = pd.crosstab(
+        df_final['carrera'], df_final['condicion_academica']
+    ).reindex(columns=CONDICIONES, fill_value=0)
+    becas = pd.crosstab(df_final['carrera'], df_final['beca_merito']).reindex(
+        columns=BECAS, fill_value=0
+    )
+    return base.join(condiciones).join(becas).reset_index()[columnas]
+ 
+ 
+def exportar_csv(df, ruta, columnas=None):
+
+    ruta = Path(ruta)
+    ruta.parent.mkdir(parents=True, exist_ok=True)
+    tabla = df if columnas is None else df[columnas]
+    tabla.to_csv(ruta, index=False, encoding='utf-8')
+    return ruta
