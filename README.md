@@ -63,8 +63,9 @@ Construir una aplicación en Python para poder realizar las siguientes tareas:
 
 # **Resultados producidos e interpretación**
 El programa no modifica el dataset original, sino que genera dos reportes de salida:
-1. `reporte_condicion_alumnos.csv`: Un consolidado con el legajo, carrera, promedio final y la condición/beca final. Permite conocer inmediatamente el estatus de la cursada y los beneficiarios de becas sin cálculos manuales.
-2. `registros_rechazados_actas.csv`: Un registro de auditoría con las filas omitidas y el motivo explícito (ej. "Legajo malformado o inválido"). Garantiza la trazabilidad exigida por la materia; no se borra ni se asume ningún dato sin documentar por qué se excluyó del cálculo.
+1. `reporte_condicion_alumnos.csv`: El dataset limpio con el legajo, carrera, promedio_final, la condicion_academica resultante y el estado de la beca_merito
+2. `registros_rechazados_actas.csv`: El archivo de trazabilidad. Contiene las filas que fallaron en la validación (ej. "Legajo inválido", "nota_matematica: fuera de rango", "Correlativas inválidas").
+3. `resumen_por_carrera.csv`: Un cuadro resumen tabular con la cantidad de alumnos y el promedio general calculado por cada carrera universitaria.
 
 
 # **Instrucciones de Ejecución**
@@ -90,5 +91,5 @@ python -m src.main
 Para verificar la pureza y estabilidad de las funciones de validación, ejecuta:
 
 ```bash
-python -m unittest -v tests/test_pipeline.py
+python -m unittest discover -v -s tests
 ```

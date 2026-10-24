@@ -1,8 +1,14 @@
-legajo,nombre_estudiante,carrera,nota_matematica,nota_programacion,nota_estadistica,nota_bases_datos,nota_fisica,asistencia_pct,adeuda_correlativas,motivo_rechazo
-1000A-5,Error Legajo,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,80,False,Legajo malformado o inválido
-10017-7,Lucas Pino,Ciencia de Datos,7.5,7.0,8.0,7.5,7.0,120,False,Asistencia fuera de rango
-10025,Fallo RegEx,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,90,False,Legajo malformado o inválido
-10035-5,Anais Pons,Ciencia de Datos,8.0,8.0,8.5,8.0,8.5,-10,False,Asistencia fuera de rango
-10069-9,Melina Carrizo,Ciencia de Datos,8.0,8.5,8.0,8.5,8.0,110,False,Asistencia fuera de rango
-10073-3,Ximena Cardozo,Ciencia de Datos,8.0,8.0,8.0,8.5,8.0,-5,False,Asistencia fuera de rango
-10075-X,Error Legajo Dos,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,85,False,Legajo malformado o inválido
+fila_origen,legajo,nombre_estudiante,carrera,nota_matematica,nota_programacion,nota_estadistica,nota_bases_datos,nota_fisica,asistencia_pct,adeuda_correlativas,motivo_rechazo
+5,1000A-5,Error Legajo,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,80,False,Legajo inválido
+7,10007-7,Pedro Rios,Ciencia de Datos,-2.0,7.0,6.0,8.0,7.0,82,False,nota_matematica: fuera de rango
+13,10013-3,Jorge Sosa,Ciencia de Datos,12.0,8.0,7.5,8.0,7.0,85,False,nota_matematica: fuera de rango
+17,10017-7,Lucas Pino,Ciencia de Datos,7.5,7.0,8.0,7.5,7.0,120,False,Asistencia fuera de rango
+25,10025,Fallo RegEx,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,90,False,Legajo inválido
+30,10030-0,Omar Soler,Ing. Informatica,-5.0,8.0,7.0,8.5,8.0,85,False,nota_matematica: fuera de rango
+35,10035-5,Anais Pons,Ciencia de Datos,8.0,8.0,8.5,8.0,8.5,-10,False,Asistencia fuera de rango
+47,10047-7,Zoe Riba,Ciencia de Datos,11.0,8.0,8.5,8.0,8.5,86,False,nota_matematica: fuera de rango
+59,10059-9,Martina Silva,Ciencia de Datos,-3.0,8.0,7.0,8.0,7.0,80,False,nota_matematica: fuera de rango
+65,10065-5,Victoria Ramos,Ciencia de Datos,13.0,9.0,8.5,9.0,8.5,87,False,nota_matematica: fuera de rango
+69,10069-9,Melina Carrizo,Ciencia de Datos,8.0,8.5,8.0,8.5,8.0,110,False,Asistencia fuera de rango
+73,10073-3,Ximena Cardozo,Ciencia de Datos,8.0,8.0,8.0,8.5,8.0,-5,False,Asistencia fuera de rango
+75,10075-X,Error Legajo Dos,Ciencia de Datos,8.0,8.0,8.0,8.0,8.0,85,False,Legajo inválido
