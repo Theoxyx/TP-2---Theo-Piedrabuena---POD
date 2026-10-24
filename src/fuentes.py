@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-import csv
 import json
 from pathlib import Path
 import pandas as pd
@@ -27,15 +26,45 @@ class FuenteDatos(ABC):
 class FuenteCSV(FuenteDatos):
     def cargar(self):
         self.comprobar_archivo()
-        return pd.read_csv(self.ruta)
+        try:
+            return pd.read_csv(self.ruta, encoding='utf-8')
+        except pd.errors.EmptyDataError as error:
+            raise ErrorDatos(f'El CSV {self.ruta.name} está vacío.') from error
+        except (pd.errors.ParserError, UnicodeDecodeError) as error:
+            raise ErrorDatos(
+                f'No se pudo leer el CSV {self.ruta.name}: {error}'
+            ) from error
 
 class FuenteJSON(FuenteDatos):
     def cargar(self):
         self.comprobar_archivo()
-        with self.ruta.open(encoding='utf-8') as archivo:
-            contenido = json.load(archivo)
+        try:
+            with self.ruta.open(encoding='utf-8') as archivo:
+                contenido = json.load(archivo)
+        except (json.JSONDecodeError, UnicodeDecodeError) as error:
+            raise ErrorDatos(
+                f'No se pudo leer el JSON {self.ruta.name}: {error}'
+            ) from error
         if not isinstance(contenido, list) or not all(
             isinstance(fila, dict) for fila in contenido
         ):
             raise ErrorDatos('El JSON debe ser una lista de objetos (registros).')
         return pd.DataFrame(contenido)
+    
+    
+FUENTES_POR_EXTENSION = {
+    '.csv': FuenteCSV,
+    '.json': FuenteJSON,
+}
+ 
+ 
+def fuente_desde_ruta(ruta):
+    """Elige la fuente adecuada según la extensión del archivo."""
+    extension = Path(ruta).suffix.lower()
+    if extension not in FUENTES_POR_EXTENSION:
+        soportados = ', '.join(sorted(FUENTES_POR_EXTENSION))
+        raise ErrorDatos(
+            f"Formato '{extension or 'sin extensión'}' no soportado. "
+            f'Formatos disponibles: {soportados}.'
+        )
+    return FUENTES_POR_EXTENSION[extension](ruta)
